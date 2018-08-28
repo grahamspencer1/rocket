@@ -51,11 +51,37 @@ class RocketTest < Minitest::Test
     assert_equal(expected, actual)
   end
 
-  def test_land_true_when_rocket_is_flying
+  def test_lift_off_true_when_rocket_not_flying
+    @rocket = Rocket.new(flying: true)
+    expected = false
+    actual = @rocket.lift_off
+    assert_equal(expected, actual)
+  end
+
+  def test_lift_off_sets_flying_to_true
+    @rocket = Rocket.new(flying: false)
+    @rocket.lift_off
+    assert @rocket.flying?
+  end
+
+  def test_land_is_true_when_rocket_is_flying
     @rocket = Rocket.new(flying: true)
     expected = true
     actual = @rocket.land
     assert_equal(expected, actual)
+  end
+
+  def test_land_is_false_when_rocket_is_not_flying
+    @rocket = Rocket.new(flying: false)
+    expected = false
+    actual = @rocket.land
+    assert_equal(expected, actual)
+  end
+
+  def test_land_sets_flying_to_false
+    @rocket = Rocket.new(flying: true)
+    @rocket.land
+    refute @rocket.flying?
   end
 
   def test_status_when_rocket_is_flying
